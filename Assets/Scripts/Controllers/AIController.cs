@@ -1,9 +1,7 @@
 using RPGProject.Assets.Scripts.Combat;
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
-using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace RPGProject.Assets.Scripts.Controllers
 {
@@ -19,6 +17,9 @@ namespace RPGProject.Assets.Scripts.Controllers
         private float _waypointTolerance = 1f;
         [SerializeField]
         private float _waypointDwellTime = 3f;
+        [Range(0,1)] 
+        [SerializeField]
+        private float _patrolSpeedFraction = .2f;
 
         private GameObject _player;
         private Health _health;
@@ -84,7 +85,7 @@ namespace RPGProject.Assets.Scripts.Controllers
 
             if (_timeSinceLastWaypoint > _waypointDwellTime)
             {
-                _mover.StartMoveAction(nextPosition);
+                _mover.StartMoveAction(nextPosition, _patrolSpeedFraction);
             }
         }
 

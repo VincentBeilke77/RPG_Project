@@ -68,6 +68,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _health
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1981746090009184543, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_Name
       value: Player

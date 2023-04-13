@@ -6,7 +6,10 @@ namespace RPGProject.Assets.Scripts.Movement
 {
     public class Mover : MonoBehaviour, IAction
     {
-        [SerializeField] private Camera _cam;
+        [SerializeField] 
+        private Camera _cam;
+        [SerializeField]
+        private float _maxSpeed = 6f;
 
         private NavMeshAgent _agent;
         private Health _health;
@@ -24,16 +27,17 @@ namespace RPGProject.Assets.Scripts.Movement
             UpdateAnimator();
         }
 
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
         }
 
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             _agent.destination = destination;
             _agent.isStopped = false;
+            _agent.speed = _maxSpeed * Mathf.Clamp01(speedFraction);
         }
 
         public void Cancel()

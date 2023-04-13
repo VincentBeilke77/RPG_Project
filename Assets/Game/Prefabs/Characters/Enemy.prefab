@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _health
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1981746090009184543, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_Name
@@ -29,15 +29,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.53
+      value: -19.52
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.23
+      value: -7.11
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalRotation.y
@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -102,6 +102,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chaseDistance: 5
   _suspicionTime: 5
+  _pathPatrol: {fileID: 0}
+  _waypointTolerance: 1
+  _waypointDwellTime: 3
 --- !u!114 &110386888000513347
 MonoBehaviour:
   m_ObjectHideFlags: 0

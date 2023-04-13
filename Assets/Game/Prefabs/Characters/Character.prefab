@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponRange: 2
   _attackSpeed: 1
-  _weaponDamage: 5
+  _weaponDamage: 10
 --- !u!114 &1030086135671177701
 MonoBehaviour:
   m_ObjectHideFlags: 0
