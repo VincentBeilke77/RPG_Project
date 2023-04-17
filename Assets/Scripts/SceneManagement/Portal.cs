@@ -1,5 +1,6 @@
 using RPGProject.Assets.Scripts.Controllers;
 using RPGProject.Assets.Scripts.Movement;
+using RPGProject.Assets.Scripts.SceneManagement;
 using System;
 using System.Collections;
 using System.Net;
@@ -19,6 +20,9 @@ namespace RPGProject.Assets.SceneManagement
         [SerializeField] private int _sceneToLoad = -1;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private DestinationIdentifier _destination;
+        [SerializeField] private float _fadeOutTime = .5f;
+        [SerializeField] private float _fadeInTime = 1f;
+        [SerializeField] private float _fadeWaitTime = .5f;
         private void Start()
         {
 
@@ -41,10 +45,18 @@ namespace RPGProject.Assets.SceneManagement
             }
 
             DontDestroyOnLoad(gameObject);
+
+            var fader = FindObjectOfType<Fader>();
+
+            yield return fader.FadeOut(_fadeOutTime);
             yield return SceneManager.LoadSceneAsync(_sceneToLoad);
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+
+            yield return new WaitForSeconds(_fadeWaitTime);
+
+            yield return fader.FadeIn(_fadeInTime);
 
             Destroy(gameObject);
         }
