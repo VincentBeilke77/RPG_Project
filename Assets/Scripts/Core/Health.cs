@@ -1,9 +1,10 @@
 ﻿using RPGProject.Assets.Scripts.Saving;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Core
 {
-    public class Health : MonoBehaviour, ISaveable
+    public class Health : MonoBehaviour, ISaveable, IJsonSaveable
     {
         [SerializeField]
         private float _health = 100f;
@@ -43,6 +44,16 @@ namespace RPGProject.Assets.Scripts.Core
             {
                 Die();
             }
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(_health);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            _health = state.ToObject<float>();
         }
     }
 }

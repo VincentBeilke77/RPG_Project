@@ -6,6 +6,8 @@ namespace RPGProject.Assets.Scripts.Saving
 {
     public class SavingWrapper : MonoBehaviour
     {
+        private JsonSavingSystem _savingSystem;
+
         private const string DefaultSaveFile = "save";
         private Fader _fader;
 
@@ -14,12 +16,13 @@ namespace RPGProject.Assets.Scripts.Saving
         private void Awake()
         {
             _fader = FindObjectOfType<Fader>();
+            _savingSystem = GetComponent<JsonSavingSystem>();
         }
 
         private IEnumerator Start()
         {
             _fader.FadeOutImmediate();
-            yield return GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile);
+            yield return _savingSystem.LoadLastScene(DefaultSaveFile);
             yield return _fader.FadeIn(fadeInTime);
         }
 
@@ -38,12 +41,12 @@ namespace RPGProject.Assets.Scripts.Saving
 
         public void Save()
         {
-            GetComponent<SavingSystem>().Save(DefaultSaveFile);
+            _savingSystem.Save(DefaultSaveFile);
         }
 
         public void Load()
         {
-            GetComponent<SavingSystem>().Load(DefaultSaveFile);
+            _savingSystem.Load(DefaultSaveFile);
         }
     }
 }
