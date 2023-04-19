@@ -1,10 +1,12 @@
 using RPGProject.Assets.Scripts.Core;
+using RPGProject.Assets.Scripts.Saving;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPGProject.Assets.Scripts.Movement
 {
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] 
         private Camera _cam;
@@ -56,6 +58,16 @@ namespace RPGProject.Assets.Scripts.Movement
             animator.SetFloat("forwardSpeed", speed);
         }
 
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
+        }
 
+        public void RestoreState(object state)
+        {
+            var position = (SerializableVector3)state;
+            GetComponent<NavMeshAgent>().Warp(position.ToVector());
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+        }
     }
 }

@@ -1,5 +1,6 @@
 using RPGProject.Assets.Scripts.Controllers;
 using RPGProject.Assets.Scripts.Movement;
+using RPGProject.Assets.Scripts.Saving;
 using RPGProject.Assets.Scripts.SceneManagement;
 using System;
 using System.Collections;
@@ -8,7 +9,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
-namespace RPGProject.Assets.SceneManagement
+namespace RPGProject.Assets.Scripts.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
@@ -47,12 +48,20 @@ namespace RPGProject.Assets.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             var fader = FindObjectOfType<Fader>();
+            var savingWrapper = FindObjectOfType<SavingWrapper>();
 
             yield return fader.FadeOut(_fadeOutTime);
+
+            savingWrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(_sceneToLoad);
+
+            savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+
+            savingWrapper.Save();
 
             yield return new WaitForSeconds(_fadeWaitTime);
 
@@ -65,8 +74,6 @@ namespace RPGProject.Assets.SceneManagement
         {
             var player = GameObject.FindWithTag("Player");
             player.GetComponent<NavMeshAgent>().Warp(otherPortal._spawnPoint.position);
-            //player.transform.position = otherPortal._spawnPoint.position;
-            //player.transform.rotation = otherPortal._spawnPoint.rotation;
         }
 
         private Portal GetOtherPortal()

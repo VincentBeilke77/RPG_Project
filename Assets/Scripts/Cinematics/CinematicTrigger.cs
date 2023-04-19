@@ -1,9 +1,11 @@
+using RPGProject.Assets.Scripts.Saving;
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace RPGProject.Assets.Cinematics
+namespace RPGProject.Assets.Scripts.Cinematics
 {
-    public class CinematicTrigger : MonoBehaviour
+    public class CinematicTrigger : MonoBehaviour, ISaveable
     {
         private bool _triggered = false;
 
@@ -14,6 +16,16 @@ namespace RPGProject.Assets.Cinematics
                 _triggered = true;
                 GetComponent<PlayableDirector>().Play();
             }
+        }
+
+        public object CaptureState()
+        {
+            return _triggered;
+        }
+
+        public void RestoreState(object state)
+        {
+            _triggered = (bool)state;
         }
     }
 }

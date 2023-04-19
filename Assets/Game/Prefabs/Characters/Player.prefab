@@ -76,12 +76,20 @@ PrefabInstance:
       propertyPath: _health
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1346178854772431532, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _uniqueIdentifier
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1981746090009184543, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1981746090009184543, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6260180718144674069, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: uniqueIdentifier
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
