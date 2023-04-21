@@ -11,6 +11,26 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 244bb0a54f371eb4d9ba910eb41acc2a, type: 2}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 244bb0a54f371eb4d9ba910eb41acc2a, type: 2}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _handTransform
+      value: 
+      objectReference: {fileID: 7096713218325516987}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _leftHandTransform
+      value: 
+      objectReference: {fileID: 7096713218325590739}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _rightHandTransform
+      value: 
+      objectReference: {fileID: 7096713218325516987}
     - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _health
       value: 40
@@ -184,3 +204,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+--- !u!4 &7096713218325516987 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 461188, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+  m_PrefabInstance: {fileID: 7096713218325453631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7096713218325590739 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 403948, guid: 679ff741e12a7e740819ede24a7000b7, type: 3}
+  m_PrefabInstance: {fileID: 7096713218325453631}
+  m_PrefabAsset: {fileID: 0}

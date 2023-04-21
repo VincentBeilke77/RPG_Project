@@ -61,6 +61,16 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 3f6fc0cf5e5d31c458bc74ede87cb8ae, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+--- !u!4 &1229300356555487791 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481036, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+  m_PrefabInstance: {fileID: 1229300356555959587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1229300356555545133 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+  m_PrefabInstance: {fileID: 1229300356555959587}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7813497262525740786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,6 +82,30 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 882607d3f41dcb74e8b62e40e598d783, type: 2}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _weaponPrefab
+      value: 
+      objectReference: {fileID: 3136701596463974926, guid: 31e89920d41922341b07a7a0d3793e35, type: 3}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _handTransform
+      value: 
+      objectReference: {fileID: 1229300356555545133}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _weaponOverride
+      value: 
+      objectReference: {fileID: 22100000, guid: e31ef87097a8ecb488923f3c100e2312, type: 2}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _leftHandTransform
+      value: 
+      objectReference: {fileID: 1229300356555487791}
+    - target: {fileID: 879585541069065567, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _rightHandTransform
+      value: 
+      objectReference: {fileID: 1229300356555545133}
     - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _health
       value: 200

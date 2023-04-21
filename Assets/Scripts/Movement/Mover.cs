@@ -1,12 +1,13 @@
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
 using System.Collections.Generic;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPGProject.Assets.Scripts.Movement
 {
-    public class Mover : MonoBehaviour, IAction, ISaveable
+    public class Mover : MonoBehaviour, IAction, ISaveable, IJsonSaveable
     {
         [SerializeField] 
         private Camera _cam;
@@ -15,11 +16,13 @@ namespace RPGProject.Assets.Scripts.Movement
 
         private NavMeshAgent _agent;
         private Health _health;
+        private ActionScheduler _actionScheduler;
 
-        private void Start()
+        private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();  
             _health = GetComponent<Health>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         // Update is called once per frame
@@ -31,7 +34,7 @@ namespace RPGProject.Assets.Scripts.Movement
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
+            _actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
 
@@ -66,8 +69,20 @@ namespace RPGProject.Assets.Scripts.Movement
         public void RestoreState(object state)
         {
             var position = (SerializableVector3)state;
-            GetComponent<NavMeshAgent>().Warp(position.ToVector());
-            GetComponent<ActionScheduler>().CancelCurrentAction();
+            _agent.Warp(position.ToVector());
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return transform.position.ToToken();
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            _agent.Warp(state.ToVector3());
+            _actionScheduler.CancelCurrentAction();
+            
         }
     }
 }

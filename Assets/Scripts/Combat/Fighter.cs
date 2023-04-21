@@ -6,12 +6,9 @@ namespace RPGProject.Assets.Scripts.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField]
-        private float _weaponRange = 2f;
-        [SerializeField]
-        private float _attackSpeed = 1f;
-        [SerializeField]
-        private float _weaponDamage = 5f;
+        [SerializeField] private Transform _rightHandTransform = null;
+        [SerializeField] private Transform _leftHandTransform = null;
+        [SerializeField] private Weapon _defaultWeapon = null;
 
         private Health _target;
         private Mover _mover;
@@ -19,13 +16,18 @@ namespace RPGProject.Assets.Scripts.Combat
         private ActionScheduler _actionScheduler;
 
         private float _attackTime = Mathf.Infinity;
+        private Weapon _currentWeapon = null;
 
-
-        private void Start()
+        private void Awake()
         {
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+        }
+
+        private void Start()
+        {
+            EquipWeapon(_defaultWeapon);
         }
 
         private void Update()
@@ -46,6 +48,13 @@ namespace RPGProject.Assets.Scripts.Combat
             }
         }
 
+        public void EquipWeapon(Weapon weapon)
+        {
+            _currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(_rightHandTransform, _leftHandTransform, animator);
+        }
+
         public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
@@ -63,7 +72,7 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             transform.LookAt(_target.transform);
 
-            if (_attackTime > _attackSpeed)
+            if (_attackTime > _currentWeapon.AttackSpeed)
             {
                 TriggerAttack();
                 _attackTime = 0;
@@ -81,12 +90,25 @@ namespace RPGProject.Assets.Scripts.Combat
         void Hit()
         {
             if (_target == null) return;
-            _target.TakeDamage(_weaponDamage);
+            if (_currentWeapon.HasProjectile())
+            {
+                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target);
+            }
+            else
+            {
+                _target.TakeDamage(_currentWeapon.Damage);
+            }
+        }
+
+        // Animation Event
+        void Shoot()
+        {
+            Hit();
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) <= _weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeapon.Range;
         }
 
         public void Cancel()
