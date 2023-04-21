@@ -4878,9 +4878,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1563715827007093531, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563715827007093531, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
       propertyPath: _hitEffect
       value: 
       objectReference: {fileID: 2302457091093092515, guid: 69d1b1037536b504884c93bb73d662db, type: 3}
+    - target: {fileID: 1563715827007093531, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: _destroyOnHit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563715827007093531, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: _destroyOnHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 3508235142214939460}
     - target: {fileID: 2604497954918887692, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.145

@@ -10,6 +10,9 @@ namespace RPGProject.Assets.Scripts.Combat
         [SerializeField] private float _speed = 1f;
         [SerializeField] private bool _isHoming = false;
         [SerializeField] private GameObject _hitEffect = null;
+        [SerializeField] private float _maxLifeTime = 5f;
+        [SerializeField] GameObject[] _destroyOnHit = null;
+        [SerializeField] private float _lifeAfterImpact = 2f;
 
         private Health _target = null;
         public Health Target { set { _target = value; } }
@@ -33,6 +36,8 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             Target = target;
             _damage = damage;
+
+            Destroy(gameObject, _maxLifeTime);
         }
 
         private Vector3 GetAimLocation()
@@ -55,12 +60,19 @@ namespace RPGProject.Assets.Scripts.Combat
 
             _target.TakeDamage(_damage);
 
+            _speed = 0f;
+
             if (_hitEffect != null)
             {
                 Instantiate(_hitEffect, GetAimLocation(), transform.rotation);
             }
 
-            Destroy(gameObject);
+            foreach(GameObject toDestroy in _destroyOnHit)
+            {
+                Destroy(toDestroy);
+            }
+
+            Destroy(gameObject, _lifeAfterImpact);
         }
     }
 }

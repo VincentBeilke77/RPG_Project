@@ -57,6 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
+--- !u!1 &2042277405353488328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1659504181823486, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
+  m_PrefabInstance: {fileID: 2040769677833300022}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4647753263641464596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,9 +90,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3135879311893650315, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
+      propertyPath: _speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135879311893650315, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
       propertyPath: _hitEffect
       value: 
       objectReference: {fileID: 4746201332588950973, guid: f12fcca27efabc9418c6c18182801dd3, type: 3}
+    - target: {fileID: 3135879311893650315, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
+      propertyPath: _destroyOnHit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135879311893650315, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
+      propertyPath: _destroyOnHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 2042277405353488328}
     - target: {fileID: 4826457968427066243, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
       propertyPath: m_Name
       value: Arrow Projectile

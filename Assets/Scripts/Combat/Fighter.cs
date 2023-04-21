@@ -1,10 +1,12 @@
 ﻿using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
+using RPGProject.Assets.Scripts.Saving;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
     {
         [SerializeField] private Transform _rightHandTransform = null;
         [SerializeField] private Transform _leftHandTransform = null;
@@ -27,7 +29,10 @@ namespace RPGProject.Assets.Scripts.Combat
 
         private void Start()
         {
-            EquipWeapon(_defaultWeapon);
+            if (_currentWeapon == null)
+            {
+                EquipWeapon(_defaultWeapon);
+            }
         }
 
         private void Update()
@@ -122,6 +127,18 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             _animator.ResetTrigger("attack");
             _animator.SetTrigger("stopAttack");
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(_currentWeapon.name);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            string weaponName = state.ToObject<string>();
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
         }
     }
 }
