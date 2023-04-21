@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _range: 11
   _attackSpeed: 1.5
-  _damage: 10
+  _damage: 7
   _isRightHanded: 0
-  _projectile: {fileID: 4809127207668537211, guid: 07af3e225c1b11e418a9753c340e7780, type: 3}
+  _projectile: {fileID: 4291443444271159721, guid: 282e72ea2cc43364ea3b96412171384a, type: 3}
   _equippedPrefab: {fileID: 8586054231148236491, guid: 622bb3e0ad5944f4494b0ffa8edb5aab, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 1956934c4891ba444a8195f455251bff, type: 2}

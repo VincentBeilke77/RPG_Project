@@ -1,4 +1,5 @@
 using RPGProject.Assets.Scripts.Core;
+using System;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Combat
@@ -12,6 +13,8 @@ namespace RPGProject.Assets.Scripts.Combat
         [SerializeField] private bool _isRightHanded = true;
         [SerializeField] private Projectile _projectile = null;
 
+        const string WeaponName = "Weapon";
+
         public float Range { get { return _range; } }
         public float AttackSpeed { get { return _attackSpeed; } }
         public float Damage { get { return _damage; } }
@@ -21,11 +24,14 @@ namespace RPGProject.Assets.Scripts.Combat
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
+            DestroyOldWeapon(rightHand, leftHand);
+
             if (_equippedPrefab != null)
             {
                 Transform handTransform = GetHandTransform(rightHand, leftHand);
 
-                Instantiate(_equippedPrefab, handTransform);
+                var weapon = Instantiate(_equippedPrefab, handTransform);
+                weapon.name = WeaponName;
             }
 
             if (_animatorOverride != null)
@@ -50,6 +56,16 @@ namespace RPGProject.Assets.Scripts.Combat
         private Transform GetHandTransform(Transform rightHand, Transform leftHand)
         {
             return _isRightHanded ? rightHand.transform : leftHand.transform;
+        }
+
+        private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            var oldWeapon = rightHand.Find(WeaponName);
+            if (oldWeapon == null) oldWeapon = leftHand.Find(WeaponName);
+            if (oldWeapon == null) return;
+
+            oldWeapon.name = "DESTROY";
+            Destroy(oldWeapon.gameObject);
         }
     }
 }

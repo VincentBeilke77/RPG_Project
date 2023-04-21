@@ -1,15 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7582252155522059504
+--- !u!1001 &4483209033465143440
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3135879311893650315, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
+      propertyPath: _isHoming
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4826457968427066243, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
       propertyPath: m_Name
-      value: ArrowProjectile Blue
+      value: Magic Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 8519467087685482104, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
       propertyPath: m_RootOrder
@@ -54,26 +58,6 @@ PrefabInstance:
     - target: {fileID: 8519467087685482104, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064516579799449301, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
-      propertyPath: m_Parameters.colorGradient.ctime0
-      value: 16384
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064516579799449301, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.b
-      value: 0.9622642
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064516579799449301, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.7607843
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064516579799449301, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.r
-      value: 0.28595585
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064516579799449301, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.a
-      value: 0.7254902
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d77ca768a0c91049a2ef453f8933bc0, type: 3}

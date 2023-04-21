@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfd0866367b4bb544aed17ff57ba192c, type: 3}
-  m_Name: Bow Red Projectile
+  m_Name: Fireball
   m_EditorClassIdentifier: 
-  _range: 11
-  _attackSpeed: 1.5
-  _damage: 7
-  _isRightHanded: 0
-  _projectile: {fileID: 5907818925233994985, guid: f8881f4ed18fda6449bb819cb989d265, type: 3}
-  _equippedPrefab: {fileID: 8586054231148236491, guid: 622bb3e0ad5944f4494b0ffa8edb5aab, type: 3}
-  _animatorOverride: {fileID: 22100000, guid: 1956934c4891ba444a8195f455251bff, type: 2}
+  _range: 20
+  _attackSpeed: 2
+  _damage: 10
+  _isRightHanded: 1
+  _projectile: {fileID: 3789193776389394187, guid: 74a2519158df94c4fac2a345519b4bc4, type: 3}
+  _equippedPrefab: {fileID: 0}
+  _animatorOverride: {fileID: 22100000, guid: a1d235f23276f9b45af8395f0a291e7f, type: 2}
