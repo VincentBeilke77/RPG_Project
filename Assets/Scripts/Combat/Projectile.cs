@@ -1,6 +1,4 @@
-﻿using Codice.CM.Triggers;
-using RPGProject.Assets.Scripts.Core;
-using System;
+﻿using RPGProject.Assets.Scripts.Attributes;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Combat

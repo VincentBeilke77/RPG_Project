@@ -1,4 +1,4 @@
-﻿using RPGProject.Assets.Scripts.Core;
+﻿using RPGProject.Assets.Scripts.Attributes;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Combat

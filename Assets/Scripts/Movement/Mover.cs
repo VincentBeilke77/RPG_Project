@@ -1,3 +1,4 @@
+using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
 using System.Collections.Generic;

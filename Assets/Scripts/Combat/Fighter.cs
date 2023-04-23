@@ -1,4 +1,5 @@
-﻿using RPGProject.Assets.Scripts.Core;
+﻿using RPGProject.Assets.Scripts.Attributes;
+using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
 using RPGProject.Assets.Scripts.Saving;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -12,13 +13,15 @@ namespace RPGProject.Assets.Scripts.Combat
         [SerializeField] private Transform _leftHandTransform = null;
         [SerializeField] private Weapon _defaultWeapon = null;
 
-        private Health _target;
         private Mover _mover;
         private Animator _animator;
         private ActionScheduler _actionScheduler;
 
         private float _attackTime = Mathf.Infinity;
         private Weapon _currentWeapon = null;
+
+        private Health _target;
+        public Health Target { get { return _target; } }
 
         private void Awake()
         {

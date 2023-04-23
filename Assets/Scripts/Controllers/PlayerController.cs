@@ -1,5 +1,5 @@
+using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Combat;
-using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
 using UnityEngine;
 

@@ -1,8 +1,10 @@
-﻿using RPGProject.Assets.Scripts.Saving;
+﻿using RPGProject.Assets.Scripts.Core;
+using RPGProject.Assets.Scripts.Saving;
+using RPGProject.Assets.Scripts.Stats;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace RPGProject.Assets.Scripts.Core
+namespace RPGProject.Assets.Scripts.Attributes
 {
     public class Health : MonoBehaviour, ISaveable, IJsonSaveable
     {
@@ -10,8 +12,19 @@ namespace RPGProject.Assets.Scripts.Core
         private float _health = 100f;
 
         private bool _isDead = false;
+        private float _maxHealth = 0;
 
         public bool IsDead { get { return _isDead; } set { _isDead = value; } }
+
+        private void Awake()
+        {
+            _maxHealth = GetComponent<BaseStats>().GetHealth();
+            _health = _maxHealth;
+        }
+        private void Start()
+        {
+
+        }
 
         public void TakeDamage(float damage)
         {
@@ -21,6 +34,11 @@ namespace RPGProject.Assets.Scripts.Core
             {
                 Die(); 
             }
+        }
+
+        public float GetPercentage()
+        {
+            return (_health / _maxHealth) * 100;
         }
 
         private void Die()
