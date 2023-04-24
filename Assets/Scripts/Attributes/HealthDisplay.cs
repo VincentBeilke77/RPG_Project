@@ -15,7 +15,7 @@ namespace RPGProject.Assets.Scripts.Attributes
 
         private void Update()
         {
-            _healthPercentage.text = $"{_health.GetPercentage():0}%";
+            _healthPercentage.text = $"{_health.HealthPoints:0}/{_health.GetMaxHealthPoints():0}";
         }
     }
 }

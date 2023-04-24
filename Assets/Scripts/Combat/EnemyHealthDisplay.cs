@@ -22,7 +22,8 @@ namespace RPGProject.Assets.Scripts.Combat
                 return;
             }
             
-            _healthPercentage.text = $"{_fighter.Target.GetPercentage():0}%";
+            Health _health = _fighter.Target;
+            _healthPercentage.text = $"{_health.HealthPoints:0}/{_health.GetMaxHealthPoints():0}";
         }
     }
 }

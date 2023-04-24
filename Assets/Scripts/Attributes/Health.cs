@@ -12,11 +12,13 @@ namespace RPGProject.Assets.Scripts.Attributes
         
         [SerializeField][Range(0,1)] private float _regenerateHealthPercent = .7f;
 
-        private float _health = -1f;
-        private bool _isDead = false;
         private BaseStats _baseStats;
 
+        private bool _isDead = false;
         public bool IsDead { get { return _isDead; } set { _isDead = value; } }
+
+        private float _healthPoints = -1f;
+        public float HealthPoints { get { return _healthPoints; } }
 
         private void Awake()
         {
@@ -25,26 +27,33 @@ namespace RPGProject.Assets.Scripts.Attributes
         }
         private void Start()
         {
-            if (_health < 0)
+            if (_healthPoints < 0)
             {
-                _health = _baseStats.GetStat(Stat.Health);
+                _healthPoints = _baseStats.GetStat(Stat.Health);
             }
         }
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            _health = Mathf.Max(_health - damage, 0);
+            print($"{gameObject.name} took damage: {damage}");
 
-            if (_health == 0)
+            _healthPoints = Mathf.Max(_healthPoints - damage, 0);
+
+            if (_healthPoints == 0)
             {
                 Die();
                 AwardExperience(instigator);
             }
+        }        
+
+        public float GetMaxHealthPoints()
+        {
+            return _baseStats.GetStat(Stat.Health);
         }
 
         public float GetPercentage()
         {
-            return (_health / _baseStats.GetStat(Stat.Health)) * 100;
+            return (_healthPoints / _baseStats.GetStat(Stat.Health)) * 100;
         }
 
         private void AwardExperience(GameObject instigator)
@@ -58,7 +67,7 @@ namespace RPGProject.Assets.Scripts.Attributes
         private void RegenerateHealth()
         {
             float regenHealthPoints = _baseStats.GetStat(Stat.Health) * _regenerateHealthPercent;
-            _health = Mathf.Max(_health, regenHealthPoints);
+            _healthPoints = Mathf.Max(_healthPoints, regenHealthPoints);
         }
 
         private void Die()
@@ -72,14 +81,14 @@ namespace RPGProject.Assets.Scripts.Attributes
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(_health);
+            return JToken.FromObject(_healthPoints);
         }
 
         public void RestoreFromJToken(JToken state)
         {
-            _health = state.ToObject<float>();
+            _healthPoints = state.ToObject<float>();
 
-            if (_health == 0)
+            if (_healthPoints == 0)
             {
                 Die();
             }

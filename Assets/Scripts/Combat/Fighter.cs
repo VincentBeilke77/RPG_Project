@@ -2,12 +2,14 @@
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
 using RPGProject.Assets.Scripts.Saving;
+using RPGProject.Assets.Scripts.Stats;
+using System.Collections.Generic;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable, IModifierProvider
     {
         [SerializeField] private Transform _rightHandTransform = null;
         [SerializeField] private Transform _leftHandTransform = null;
@@ -16,6 +18,7 @@ namespace RPGProject.Assets.Scripts.Combat
         private Mover _mover;
         private Animator _animator;
         private ActionScheduler _actionScheduler;
+        private BaseStats _stats;
 
         private float _attackTime = Mathf.Infinity;
         private Weapon _currentWeapon = null;
@@ -28,6 +31,7 @@ namespace RPGProject.Assets.Scripts.Combat
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _stats = GetComponent<BaseStats>();
         }
 
         private void Start()
@@ -98,13 +102,14 @@ namespace RPGProject.Assets.Scripts.Combat
         void Hit()
         {
             if (_target == null) return;
+            float damage =  _stats.GetStat(Stat.Damage);
             if (_currentWeapon.HasProjectile())
             {
-                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject);
+                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
             }
             else
             {
-                _target.TakeDamage(gameObject, _currentWeapon.Damage);
+                _target.TakeDamage(gameObject, damage);
             }
         }
 
@@ -132,6 +137,14 @@ namespace RPGProject.Assets.Scripts.Combat
             _animator.SetTrigger("stopAttack");
         }
 
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.Damage;
+            }
+        }
+
         public JToken CaptureAsJToken()
         {
             return JToken.FromObject(_currentWeapon.name);
@@ -142,6 +155,14 @@ namespace RPGProject.Assets.Scripts.Combat
             string weaponName = state.ToObject<string>();
             Weapon weapon = Resources.Load<Weapon>(weaponName);
             EquipWeapon(weapon);
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.PercentageBonus;
+            }
         }
     }
 }

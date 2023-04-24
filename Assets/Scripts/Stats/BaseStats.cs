@@ -11,6 +11,7 @@ namespace RPGProject.Assets.Scripts.Stats
         [SerializeField] private CharacterClass _characterClass;
         [SerializeField] private Progression _progression = null;
         [SerializeField] private GameObject _levelUpParticleEffect = null;
+        [SerializeField] private bool _canUseModifiers = false;
 
         public event Action OnLevelUp;
 
@@ -44,6 +45,11 @@ namespace RPGProject.Assets.Scripts.Stats
 
         public float GetStat(Stat stat)
         {
+            return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1 + (GetPercentageModifier(stat) / 100));
+        }
+
+        private float GetBaseStat(Stat stat)
+        {
             return _progression.GetStat(stat, _characterClass, GetLevel());
         }
 
@@ -57,7 +63,38 @@ namespace RPGProject.Assets.Scripts.Stats
             return _currentLevel;
         }
 
-        public int CalculateLevel()
+        private float GetAdditiveModifier(Stat stat)
+        {
+            if (!_canUseModifiers) return 0f;
+
+            var total = 0f;
+            foreach (var providor in GetComponents<IModifierProvider>())
+            {
+                foreach (var modifier in providor.GetAdditiveModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
+        }
+
+        private float GetPercentageModifier(Stat stat)
+        {
+            if (!_canUseModifiers) return 0f;
+
+            var total = 0f;
+            foreach (var providor in GetComponents<IModifierProvider>())
+            {
+                foreach (var modifier in providor.GetPercentageModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+
+            return total;
+        }
+
+        private int CalculateLevel()
         {
             if (_experience == null) return _startingLevel;
 

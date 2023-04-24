@@ -51,6 +51,18 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50
   - CharacterClass: 1
     Stats:
     - Stat: 0
@@ -89,11 +101,23 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50
   - CharacterClass: 2
     Stats:
     - Stat: 0
       Levels:
-      - 200
+      - 100
       - 200
       - 300
       - 400
@@ -127,6 +151,18 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50
   - CharacterClass: 3
     Stats:
     - Stat: 0
@@ -165,6 +201,18 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50
   - CharacterClass: 4
     Stats:
     - Stat: 0
@@ -203,6 +251,18 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50
   - CharacterClass: 5
     Stats:
     - Stat: 0
@@ -241,3 +301,15 @@ MonoBehaviour:
       - 280
       - 320
       - 360
+    - Stat: 3
+      Levels:
+      - 8
+      - 10
+      - 16
+      - 20
+      - 26
+      - 30
+      - 36
+      - 40
+      - 46
+      - 50

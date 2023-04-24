@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5fbff8686b6e40b3579abaaa69917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _regenerateHealthPercent: 0.7
 --- !u!195 &407244956
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -224,3 +224,5 @@ MonoBehaviour:
   _startingLevel: 1
   _characterClass: 0
   _progression: {fileID: 11400000, guid: 7fdf566e9567788468672ec782e78984, type: 2}
+  _levelUpParticleEffect: {fileID: 0}
+  _canUseModifiers: 0

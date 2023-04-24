@@ -4,6 +4,7 @@
     {
         Health,
         ExperienceReward,
-        LevelUpExperience
+        LevelUpExperience,
+        Damage
     }
 }
