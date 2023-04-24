@@ -17,9 +17,10 @@ namespace RPGProject.Assets.Scripts.Saving
         {
             _fader = FindObjectOfType<Fader>();
             _savingSystem = GetComponent<JsonSavingSystem>();
+            StartCoroutine(LoadLastScene());
         }
 
-        private IEnumerator Start()
+        private IEnumerator LoadLastScene()
         {
             _fader.FadeOutImmediate();
             yield return _savingSystem.LoadLastScene(DefaultSaveFile);
@@ -37,6 +38,11 @@ namespace RPGProject.Assets.Scripts.Saving
             {
                 Load();
             }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                Delete();
+            }
         }
 
         public void Save()
@@ -47,6 +53,11 @@ namespace RPGProject.Assets.Scripts.Saving
         public void Load()
         {
             _savingSystem.Load(DefaultSaveFile);
+        }
+
+        public void Delete()
+        {
+            GetComponent<JsonSavingSystem>().Delete(DefaultSaveFile);
         }
     }
 }

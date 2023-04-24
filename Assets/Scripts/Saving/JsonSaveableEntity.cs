@@ -25,7 +25,7 @@ namespace RPGProject.Assets.Scripts.Saving
             {
                 JToken token = jsonSaveable.CaptureAsJToken();
                 var component = jsonSaveable.GetType().ToString();
-                Debug.Log($"{name} Capture {component} = {token}");
+                //Debug.Log($"{name} Capture {component} = {token}");
                 stateDict[component] = token;
             }
 
@@ -43,7 +43,7 @@ namespace RPGProject.Assets.Scripts.Saving
 
                 if(stateDict.ContainsKey(component))
                 {
-                    Debug.Log($"{name} Restore {component} =>{stateDict[component]}");
+                    //Debug.Log($"{name} Restore {component} =>{stateDict[component]}");
                     jsonSaveable.RestoreFromJToken(stateDict[component]);
                 }
             }

@@ -19,11 +19,10 @@ namespace RPGProject.Assets.Scripts.Combat
             if (_fighter.Target == null)
             {
                 _healthPercentage.text = "N/A";
+                return;
             }
-            else
-            {
-                _healthPercentage.text = $"{_fighter.Target.GetPercentage():0}%";
-            }
+            
+            _healthPercentage.text = $"{_fighter.Target.GetPercentage():0}%";
         }
     }
 }

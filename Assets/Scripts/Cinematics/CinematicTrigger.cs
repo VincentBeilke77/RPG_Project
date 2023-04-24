@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 
 namespace RPGProject.Assets.Scripts.Cinematics
 {
-    public class CinematicTrigger : MonoBehaviour, ISaveable, IJsonSaveable
+    public class CinematicTrigger : MonoBehaviour, IJsonSaveable
     {
         private bool _triggered = false;
 
@@ -18,16 +18,6 @@ namespace RPGProject.Assets.Scripts.Cinematics
                 _triggered = true;
                 GetComponent<PlayableDirector>().Play();
             }
-        }
-
-        public object CaptureState()
-        {
-            return _triggered;
-        }
-
-        public void RestoreState(object state)
-        {
-            _triggered = (bool)state;
         }
 
         public JToken CaptureAsJToken()

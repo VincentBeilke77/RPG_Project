@@ -1,44 +1,64 @@
 ﻿using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
 using RPGProject.Assets.Scripts.Stats;
+using System;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Attributes
 {
-    public class Health : MonoBehaviour, ISaveable, IJsonSaveable
+    public class Health : MonoBehaviour, IJsonSaveable
     {
-        [SerializeField]
-        private float _health = 100f;
+        
+        [SerializeField][Range(0,1)] private float _regenerateHealthPercent = .7f;
 
+        private float _health = -1f;
         private bool _isDead = false;
-        private float _maxHealth = 0;
+        private BaseStats _baseStats;
 
         public bool IsDead { get { return _isDead; } set { _isDead = value; } }
 
         private void Awake()
         {
-            _maxHealth = GetComponent<BaseStats>().GetHealth();
-            _health = _maxHealth;
+            _baseStats = GetComponent<BaseStats>();
+            _baseStats.OnLevelUp += RegenerateHealth;
         }
         private void Start()
         {
-
+            if (_health < 0)
+            {
+                _health = _baseStats.GetStat(Stat.Health);
+            }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator, float damage)
         {
             _health = Mathf.Max(_health - damage, 0);
 
             if (_health == 0)
             {
-                Die(); 
+                Die();
+                AwardExperience(instigator);
             }
         }
 
         public float GetPercentage()
         {
-            return (_health / _maxHealth) * 100;
+            return (_health / _baseStats.GetStat(Stat.Health)) * 100;
+        }
+
+        private void AwardExperience(GameObject instigator)
+        {
+            var experience = instigator.GetComponent<Experience>();
+            if (experience == null) return;
+
+            experience.GainExperience(_baseStats.GetStat(Stat.ExperienceReward));
+        }
+
+        private void RegenerateHealth()
+        {
+            float regenHealthPoints = _baseStats.GetStat(Stat.Health) * _regenerateHealthPercent;
+            _health = Mathf.Max(_health, regenHealthPoints);
         }
 
         private void Die()
@@ -49,20 +69,6 @@ namespace RPGProject.Assets.Scripts.Attributes
             GetComponent<ActionScheduler>().CancelCurrentAction();
             _isDead = true;
         }
-        public object CaptureState()
-        {
-            return _health;
-        }
-
-        public void RestoreState(object state)
-        {
-            _health = (float)state;
-
-            if (_health == 0)
-            {
-                Die();
-            }
-        }
 
         public JToken CaptureAsJToken()
         {
@@ -72,6 +78,11 @@ namespace RPGProject.Assets.Scripts.Attributes
         public void RestoreFromJToken(JToken state)
         {
             _health = state.ToObject<float>();
+
+            if (_health == 0)
+            {
+                Die();
+            }
         }
     }
 }

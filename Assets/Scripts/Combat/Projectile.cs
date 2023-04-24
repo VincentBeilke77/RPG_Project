@@ -16,6 +16,7 @@ namespace RPGProject.Assets.Scripts.Combat
         public Health Target { set { _target = value; } }
 
         private float _damage = 0f;
+        private GameObject _instigator = null;
 
         private void Start()
         {
@@ -30,10 +31,11 @@ namespace RPGProject.Assets.Scripts.Combat
             transform.Translate(Vector3.forward * _speed* Time.deltaTime);
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             Target = target;
             _damage = damage;
+            _instigator = instigator;
 
             Destroy(gameObject, _maxLifeTime);
         }
@@ -56,7 +58,7 @@ namespace RPGProject.Assets.Scripts.Combat
             
             if (_target.IsDead) return;
 
-            _target.TakeDamage(_damage);
+            _target.TakeDamage(_instigator, _damage);
 
             _speed = 0f;
 

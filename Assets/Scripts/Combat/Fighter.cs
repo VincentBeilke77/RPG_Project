@@ -100,11 +100,11 @@ namespace RPGProject.Assets.Scripts.Combat
             if (_target == null) return;
             if (_currentWeapon.HasProjectile())
             {
-                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target);
+                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject);
             }
             else
             {
-                _target.TakeDamage(_currentWeapon.Damage);
+                _target.TakeDamage(gameObject, _currentWeapon.Damage);
             }
         }
 

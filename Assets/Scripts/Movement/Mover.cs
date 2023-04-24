@@ -1,19 +1,16 @@
 using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
-using System.Collections.Generic;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPGProject.Assets.Scripts.Movement
 {
-    public class Mover : MonoBehaviour, IAction, ISaveable, IJsonSaveable
+    public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
-        [SerializeField] 
-        private Camera _cam;
-        [SerializeField]
-        private float _maxSpeed = 6f;
+        [SerializeField] private Camera _cam;
+        [SerializeField] private float _maxSpeed = 6f;
 
         private NavMeshAgent _agent;
         private Health _health;
@@ -60,18 +57,6 @@ namespace RPGProject.Assets.Scripts.Movement
 
             var animator = GetComponent<Animator>();
             animator.SetFloat("forwardSpeed", speed);
-        }
-
-        public object CaptureState()
-        {
-            return new SerializableVector3(transform.position);
-        }
-
-        public void RestoreState(object state)
-        {
-            var position = (SerializableVector3)state;
-            _agent.Warp(position.ToVector());
-            _actionScheduler.CancelCurrentAction();
         }
 
         public JToken CaptureAsJToken()

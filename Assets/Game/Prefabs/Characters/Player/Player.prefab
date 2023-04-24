@@ -82,6 +82,10 @@ PrefabInstance:
       propertyPath: _characterClass
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -5032782454523152749, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _levelUpParticleEffect
+      value: 
+      objectReference: {fileID: 416308814649062248, guid: 24b8bf2e47cf6d849b9cf0e15e777ff8, type: 3}
     - target: {fileID: 407244956, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -117,6 +121,10 @@ PrefabInstance:
     - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _health
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: _regenerateHealthPercent
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1346178854772431532, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _uniqueIdentifier
@@ -220,3 +228,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf48d9e221f831498b191844e58103b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7787048791471862667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642282123171020781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd6c2f35cf8d3f4388d05931eb04fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points: 0

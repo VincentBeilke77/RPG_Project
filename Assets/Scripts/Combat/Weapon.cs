@@ -52,12 +52,12 @@ namespace RPGProject.Assets.Scripts.Combat
             return _projectile != null;
         }
 
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
         {
             var projectileInstance = Instantiate(
                 _projectile, GetHandTransform(rightHand, leftHand).position, Quaternion.identity);
 
-            projectileInstance.SetTarget(target, Damage);
+            projectileInstance.SetTarget(target, instigator, Damage);
         }
 
         private Transform GetHandTransform(Transform rightHand, Transform leftHand)
