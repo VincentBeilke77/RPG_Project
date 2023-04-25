@@ -15,15 +15,15 @@ namespace RPGProject.Assets.Scripts.Saving
 
         private void Awake()
         {
-            _fader = FindObjectOfType<Fader>();
             _savingSystem = GetComponent<JsonSavingSystem>();
             StartCoroutine(LoadLastScene());
         }
 
         private IEnumerator LoadLastScene()
         {
-            _fader.FadeOutImmediate();
             yield return _savingSystem.LoadLastScene(DefaultSaveFile);
+            _fader = FindObjectOfType<Fader>();
+            _fader.FadeOutImmediate();
             yield return _fader.FadeIn(fadeInTime);
         }
 

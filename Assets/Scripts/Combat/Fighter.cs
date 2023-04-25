@@ -1,8 +1,10 @@
-﻿using RPGProject.Assets.Scripts.Attributes;
+﻿using GameDevTV.Utils;
+using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
 using RPGProject.Assets.Scripts.Saving;
 using RPGProject.Assets.Scripts.Stats;
+using System;
 using System.Collections.Generic;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -21,7 +23,7 @@ namespace RPGProject.Assets.Scripts.Combat
         private BaseStats _stats;
 
         private float _attackTime = Mathf.Infinity;
-        private Weapon _currentWeapon = null;
+        private LazyValue<Weapon> _currentWeapon;
 
         private Health _target;
         public Health Target { get { return _target; } }
@@ -32,14 +34,18 @@ namespace RPGProject.Assets.Scripts.Combat
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _stats = GetComponent<BaseStats>();
+            _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(_defaultWeapon);
+            return _defaultWeapon;
         }
 
         private void Start()
         {
-            if (_currentWeapon == null)
-            {
-                EquipWeapon(_defaultWeapon);
-            }
+            _currentWeapon.ForceInit();
         }
 
         private void Update()
@@ -62,7 +68,12 @@ namespace RPGProject.Assets.Scripts.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            _currentWeapon = weapon;
+            _currentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(_rightHandTransform, _leftHandTransform, animator);
         }
@@ -84,7 +95,7 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             transform.LookAt(_target.transform);
 
-            if (_attackTime > _currentWeapon.AttackSpeed)
+            if (_attackTime > _currentWeapon.value.AttackSpeed)
             {
                 TriggerAttack();
                 _attackTime = 0;
@@ -103,9 +114,9 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (_target == null) return;
             float damage =  _stats.GetStat(Stat.Damage);
-            if (_currentWeapon.HasProjectile())
+            if (_currentWeapon.value.HasProjectile())
             {
-                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
+                _currentWeapon.value.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
             }
             else
             {
@@ -121,7 +132,7 @@ namespace RPGProject.Assets.Scripts.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeapon.Range;
+            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeapon.value.Range;
         }
 
         public void Cancel()
@@ -141,13 +152,13 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.Damage;
+                yield return _currentWeapon.value.Damage;
             }
         }
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(_currentWeapon.name);
+            return JToken.FromObject(_currentWeapon.value.name);
         }
 
         public void RestoreFromJToken(JToken state)
@@ -161,7 +172,7 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.PercentageBonus;
+                yield return _currentWeapon.value.PercentageBonus;
             }
         }
     }

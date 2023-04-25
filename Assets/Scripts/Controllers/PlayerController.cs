@@ -11,7 +11,7 @@ namespace RPGProject.Assets.Scripts.Controllers
         private Health _health;
         private Mover _mover;
 
-        private void Start()
+        private void Awake()
         {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();

@@ -1,3 +1,4 @@
+using GameDevTV.Utils;
 using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Combat;
 using RPGProject.Assets.Scripts.Core;
@@ -8,19 +9,13 @@ namespace RPGProject.Assets.Scripts.Controllers
 {
     public class AIController : MonoBehaviour
     {
-        [SerializeField]
-        private float _chaseDistance = 5f;
-        [SerializeField]
-        private float _suspicionTime = 3f;
-        [SerializeField]
-        private PathPatrol _pathPatrol;
-        [SerializeField]
-        private float _waypointTolerance = 1f;
-        [SerializeField]
-        private float _waypointDwellTime = 3f;
+        [SerializeField] private float _chaseDistance = 5f;
+        [SerializeField] private float _suspicionTime = 3f;
+        [SerializeField] private PathPatrol _pathPatrol;
+        [SerializeField] private float _waypointTolerance = 1f;
+        [SerializeField] private float _waypointDwellTime = 3f;
         [Range(0,1)] 
-        [SerializeField]
-        private float _patrolSpeedFraction = .2f;
+        [SerializeField] private float _patrolSpeedFraction = .2f;
 
         private GameObject _player;
         private Health _health;
@@ -28,20 +23,29 @@ namespace RPGProject.Assets.Scripts.Controllers
         private Fighter _fighter;
         private ActionScheduler _actionScheduler;
 
-        private Vector3 _guardPosition;
+        private LazyValue<Vector3> _guardPosition;
         private float _timeSinceLastSeenPlayer = Mathf.Infinity;
         private float _timeSinceLastWaypoint = Mathf.Infinity;
         private int _currentWaypointIndex = 0;
 
-        private void Start()
+        private void Awake()
         {
             _player = GameObject.FindWithTag("Player");
             _health = GetComponent<Health>();
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+        }
 
-            _guardPosition = transform.position;
+        private Vector3 GetGuardPosition()
+        {
+            return transform.position;
+        }
+
+        private void Start()
+        {
+            _guardPosition.ForceInit();
         }
 
         private void Update()
@@ -72,7 +76,7 @@ namespace RPGProject.Assets.Scripts.Controllers
 
         private void PatrolBehaviour()
         {
-            Vector3 nextPosition = _guardPosition;
+            Vector3 nextPosition = _guardPosition.value;
 
             if (_pathPatrol != null)
             {

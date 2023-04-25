@@ -19,10 +19,6 @@ namespace RPGProject.Assets.Scripts.SceneManagement
         [SerializeField] private float _fadeOutTime = .5f;
         [SerializeField] private float _fadeInTime = 1f;
         [SerializeField] private float _fadeWaitTime = .5f;
-        private void Start()
-        {
-
-        }
 
         private void OnTriggerEnter(Collider other)
         {

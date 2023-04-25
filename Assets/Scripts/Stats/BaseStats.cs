@@ -1,4 +1,5 @@
-﻿using RPGProject.Assets.Scripts.Attributes;
+﻿using GameDevTV.Utils;
+using RPGProject.Assets.Scripts.Attributes;
 using System;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace RPGProject.Assets.Scripts.Stats
     public class BaseStats : MonoBehaviour
     {
         [Range(1, 99)]
-        [SerializeField] private int _startingLevel;
+        [SerializeField] private int _startingLevel = 1;
         [SerializeField] private CharacterClass _characterClass;
         [SerializeField] private Progression _progression = null;
         [SerializeField] private GameObject _levelUpParticleEffect = null;
@@ -16,28 +17,42 @@ namespace RPGProject.Assets.Scripts.Stats
         public event Action OnLevelUp;
 
         private Experience _experience;
-        private int _currentLevel = 0;
+        
+        private LazyValue<int> _currentLevel;
+
+        private void Awake()
+        {
+            _experience = GetComponent<Experience>();
+            _currentLevel = new LazyValue<int>(CalculateLevel);
+        }
 
         private void Start()
         {
-            _currentLevel = CalculateLevel();
+            _currentLevel.ForceInit();
+        }
+
+        private void OnEnable()
+        {
             if (_experience != null)
             {
                 _experience.OnExperiencedGained += UpdateLevel;
             }
         }
 
-        private void Awake()
+        private void OnDisable()
         {
-            _experience = GetComponent<Experience>();
+            if (_experience != null)
+            {
+                _experience.OnExperiencedGained -= UpdateLevel;
+            }
         }
 
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > _currentLevel) 
+            if (newLevel > _currentLevel.value) 
             {
-                _currentLevel = newLevel;
+                _currentLevel.value = newLevel;
                 LevelUpEffect();
                 OnLevelUp();
             }
@@ -55,12 +70,7 @@ namespace RPGProject.Assets.Scripts.Stats
 
         public int GetLevel()
         {
-            if (_currentLevel < 1)
-            {
-                _currentLevel = CalculateLevel();
-            }
-
-            return _currentLevel;
+            return _currentLevel.value;
         }
 
         private float GetAdditiveModifier(Stat stat)
