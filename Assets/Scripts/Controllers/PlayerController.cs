@@ -1,19 +1,25 @@
+using Codice.Client.BaseCommands.Merge;
 using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Combat;
 using RPGProject.Assets.Scripts.Movement;
+using System;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace RPGProject.Assets.Scripts.Controllers
 {
     public class PlayerController : MonoBehaviour
     {
-        private Fighter _fighter;
         private Health _health;
         private Mover _mover;
 
+        [SerializeField] private CursorMapping[] _cursorMappings = null;
+        [SerializeField] private float _maxNavMeshProjection = 1.0f;
+        [SerializeField] private float _maxNavPathLength = 40.0f;
+
         private void Awake()
         {
-            _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
             _mover = GetComponent<Mover>();
         }
@@ -21,25 +27,65 @@ namespace RPGProject.Assets.Scripts.Controllers
         // Update is called once per frame
         void Update()
         {
-            if (_health.IsDead) return;
-            if (InteractWithCombat()) return;
+            if (InteractWithUI())
+            {
+                return;
+            }
+
+            if (_health.IsDead)
+            {
+                SetCursor(CursorType.None);
+                return;
+            }
+
+            if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
+            SetCursor(CursorType.None);
         }
 
-        private bool InteractWithCombat()
-        {            
-            var hits = Physics.RaycastAll(GetMouseRay());
+        private bool InteractWithComponent()
+        {
+            var hits = RaycastAllSorted();
+
             foreach (var hit in hits)
             {
-                var target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;
-
-                if (!_fighter.CanAttack(target.gameObject)) continue;
-
-                if (Input.GetMouseButton(0))
+                var raycastables = hit.transform.GetComponents<IRaycastable>();
+                foreach (var raycastable in raycastables)
                 {
-                    _fighter.Attack(target.gameObject);
+                    if (raycastable.HandleRaycast(this))
+                    {
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
                 }
+            }
+
+            return false;
+        }
+
+        private RaycastHit[] RaycastAllSorted()
+        {
+            var hits = Physics.RaycastAll(GetMouseRay());
+            BubbleSortByDistance(hits);
+            return hits;
+        }
+
+        private static void BubbleSortByDistance(RaycastHit[] hits)
+        {
+            var distances = new float[hits.Length];
+            for (int i = 0; i < hits.Length; i++)
+            {
+                distances[i] = hits[i].distance;
+            }
+            Array.Sort(distances, hits);
+        }
+
+        private bool InteractWithUI()
+        {
+            // event system works through UI so GameObject refers to this
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
                 return true;
             }
             return false;
@@ -47,25 +93,86 @@ namespace RPGProject.Assets.Scripts.Controllers
 
         private bool InteractWithMovement()
         {
-            return MoveToCursor();
-        }
+            bool hasHit = RaycastNavMesh(out Vector3 target);
 
-        private bool MoveToCursor()
-        {
-            if (Physics.Raycast(GetMouseRay(), out RaycastHit hitInfo))
+            if (hasHit)
             {
                 if (Input.GetMouseButton(0))
                 {
-                    _mover.StartMoveAction(hitInfo.point, 1f);
+                    _mover.StartMoveAction(target, 1f);
                 }
+                SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
+        }
+
+        private bool RaycastNavMesh(out Vector3 target)
+        {
+            target = new Vector3();
+
+            bool hasHit = Physics.Raycast(GetMouseRay(), out RaycastHit hit);
+            if (!hasHit) return false;
+
+            bool hasCastToNavMesh = NavMesh.SamplePosition(
+                hit.point, out NavMeshHit navMeshHit, _maxNavMeshProjection, NavMesh.AllAreas);
+
+            if (!hasCastToNavMesh) return false;
+                        
+            target = navMeshHit.position;
+
+            NavMeshPath path = new NavMeshPath();
+            var hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
+
+            if (!hasPath) return false;
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > _maxNavPathLength) return false;
+
+            return true;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float pathLength = 0;
+
+            if (path.corners.Length < 2) return pathLength;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                var distance = Vector3.Distance(path.corners[i], path.corners[i + 1]);
+                pathLength += distance;
+            }
+
+            return pathLength;
+        }
+
+        private void SetCursor(CursorType cursorType)
+        {
+            CursorMapping mapping = GetCursorMapping(cursorType);
+            Cursor.SetCursor(mapping.texture, mapping.hotSpot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type)
+        {
+            foreach (var mapping in _cursorMappings)
+            {
+                if (mapping.type == type) return mapping;   
+            }
+
+            return _cursorMappings[0];
         }
 
         private static Ray GetMouseRay()
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
+    }
+
+    [System.Serializable]
+    internal struct CursorMapping
+    {
+        public CursorType type;
+        public Texture2D texture;
+        public Vector2 hotSpot;
     }
 }
