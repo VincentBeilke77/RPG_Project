@@ -3,7 +3,7 @@ using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
 using RPGProject.Assets.Scripts.Stats;
 using System;
-using Unity.Plastic.Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Attributes

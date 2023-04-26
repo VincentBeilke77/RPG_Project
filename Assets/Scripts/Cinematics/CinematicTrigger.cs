@@ -1,7 +1,7 @@
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Saving;
 using System;
-using Unity.Plastic.Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 
