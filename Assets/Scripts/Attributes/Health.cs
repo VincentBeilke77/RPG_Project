@@ -13,7 +13,8 @@ namespace RPGProject.Assets.Scripts.Attributes
     {
         [Range(0, 1)]
         [SerializeField] private float _regenerateHealthPercent = .7f;
-        [SerializeField] private UnityEvent<float> _takeDamage;
+        [SerializeField] private UnityEvent<float> TakeDamageEvent;
+        [SerializeField] private UnityEvent OnDieEvent;
 
         private BaseStats _baseStats;
 
@@ -23,8 +24,8 @@ namespace RPGProject.Assets.Scripts.Attributes
         private LazyValue<float> _healthPoints;
         public float HealthPoints { get { return _healthPoints.value; } }
 
-        public event Action OnHealthChanged;
-        public event Action OnDeath;
+        public event Action OnHealthChangedEvent;
+        public event Action OnDeathEvent;
 
         private void Awake()
         {
@@ -60,14 +61,15 @@ namespace RPGProject.Assets.Scripts.Attributes
 
             if (_healthPoints.value == 0)
             {
+                OnDeathEvent?.Invoke();
+                OnDieEvent.Invoke();
                 Die();
                 AwardExperience(instigator);
-                OnDeath?.Invoke();
             }
             else
             {
-                _takeDamage.Invoke(damage);
-                OnHealthChanged?.Invoke();
+                OnHealthChangedEvent?.Invoke();
+                TakeDamageEvent.Invoke(damage);
             }
         }        
 

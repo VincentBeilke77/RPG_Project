@@ -4897,6 +4897,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.145
       objectReference: {fileID: 0}
+    - target: {fileID: 4481739589716230027, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 94fc62564eabf2e429355affe6bee585, type: 3}
     - target: {fileID: 4898842245976202821, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
       propertyPath: m_Time
       value: 0
@@ -4949,6 +4953,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6305541066319418321, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8711244564729747906, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
       propertyPath: m_Size.x
       value: 0
@@ -4977,6 +4985,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fireball Magic Projectile
       objectReference: {fileID: 0}
+    - target: {fileID: 9005782631666340506, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: da0093ebe4323b846a8f67e40229df09, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c263e9325191d2e41ac4774dfe4168d8, type: 3}
 --- !u!4 &7577922215060611832 stripped

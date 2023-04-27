@@ -12,14 +12,14 @@ namespace RPGProject.Assets.Scripts.Attributes
 
         private void OnEnable()
         {
-            _healthComponent.OnHealthChanged += OnHealthChanged;
-            _healthComponent.OnDeath += OnDeath;
+            _healthComponent.OnHealthChangedEvent += OnHealthChanged;
+            _healthComponent.OnDeathEvent += OnDeath;
         }
 
         private void OnDisable()
         {
-            _healthComponent.OnHealthChanged -= OnHealthChanged;
-            _healthComponent.OnDeath -= OnDeath;
+            _healthComponent.OnHealthChangedEvent -= OnHealthChanged;
+            _healthComponent.OnDeathEvent -= OnDeath;
         }
 
         private void OnHealthChanged()

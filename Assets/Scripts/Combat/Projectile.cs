@@ -1,5 +1,6 @@
 ﻿using RPGProject.Assets.Scripts.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPGProject.Assets.Scripts.Combat
 {
@@ -11,6 +12,8 @@ namespace RPGProject.Assets.Scripts.Combat
         [SerializeField] private float _maxLifeTime = 5f;
         [SerializeField] GameObject[] _destroyOnHit = null;
         [SerializeField] private float _lifeAfterImpact = 2f;
+
+        [SerializeField] private UnityEvent OnHt;
 
         private Health _target = null;
         public Health Target { set { _target = value; } }
@@ -61,6 +64,8 @@ namespace RPGProject.Assets.Scripts.Combat
             _target.TakeDamage(_instigator, _damage);
 
             _speed = 0f;
+
+            OnHt.Invoke();
 
             if (_hitEffect != null)
             {
