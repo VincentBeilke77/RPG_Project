@@ -79,6 +79,9 @@ MonoBehaviour:
   _sceneToLoad: -1
   _spawnPoint: {fileID: 7401235651219803208}
   _destination: 0
+  _fadeOutTime: 0.5
+  _fadeInTime: 5
+  _fadeWaitTime: 0.5
 --- !u!1 &6505829797096606039
 GameObject:
   m_ObjectHideFlags: 0
