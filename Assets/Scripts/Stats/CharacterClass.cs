@@ -3,7 +3,7 @@
     public enum CharacterClass
     {
         Grunt,
-        Cleric,
+        Thug,
         Fighter,
         MagicUser,
         Archer,

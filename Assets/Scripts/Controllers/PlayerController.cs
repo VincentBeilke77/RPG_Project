@@ -1,6 +1,4 @@
-using Codice.Client.BaseCommands.Merge;
 using RPGProject.Assets.Scripts.Attributes;
-using RPGProject.Assets.Scripts.Combat;
 using RPGProject.Assets.Scripts.Movement;
 using System;
 using UnityEngine;

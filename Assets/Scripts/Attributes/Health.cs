@@ -5,13 +5,15 @@ using RPGProject.Assets.Scripts.Stats;
 using System;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPGProject.Assets.Scripts.Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
-        
-        [SerializeField][Range(0,1)] private float _regenerateHealthPercent = .7f;
+        [Range(0, 1)]
+        [SerializeField] private float _regenerateHealthPercent = .7f;
+        [SerializeField] private UnityEvent<float> _takeDamage;
 
         private BaseStats _baseStats;
 
@@ -20,6 +22,9 @@ namespace RPGProject.Assets.Scripts.Attributes
 
         private LazyValue<float> _healthPoints;
         public float HealthPoints { get { return _healthPoints.value; } }
+
+        public event Action OnHealthChanged;
+        public event Action OnDeath;
 
         private void Awake()
         {
@@ -57,6 +62,12 @@ namespace RPGProject.Assets.Scripts.Attributes
             {
                 Die();
                 AwardExperience(instigator);
+                OnDeath?.Invoke();
+            }
+            else
+            {
+                _takeDamage.Invoke(damage);
+                OnHealthChanged?.Invoke();
             }
         }        
 
@@ -67,7 +78,12 @@ namespace RPGProject.Assets.Scripts.Attributes
 
         public float GetPercentage()
         {
-            return (HealthPoints / _baseStats.GetStat(Stat.Health)) * 100;
+            return 100 * GetFraction();
+        }
+
+        public float GetFraction()
+        {
+            return _healthPoints.value / GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void AwardExperience(GameObject instigator)

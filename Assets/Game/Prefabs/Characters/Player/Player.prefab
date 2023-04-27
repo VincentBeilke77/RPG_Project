@@ -122,14 +122,6 @@ PrefabInstance:
       propertyPath: _rightHandTransform
       value: 
       objectReference: {fileID: 1229300356555545133}
-    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
-      propertyPath: _health
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
-      propertyPath: _regenerateHealthPercent
-      value: 0.7
-      objectReference: {fileID: 0}
     - target: {fileID: 1346178854772431532, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _uniqueIdentifier
       value: Player
@@ -149,6 +141,10 @@ PrefabInstance:
     - target: {fileID: 6260180718144674069, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: uniqueIdentifier
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654920011316009292, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_RootOrder
@@ -248,6 +244,8 @@ MonoBehaviour:
   - type: 4
     texture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
     hotSpot: {x: 0, y: 0}
+  _maxNavMeshProjection: 1
+  _maxNavPathLength: 40
 --- !u!114 &7787048791471862667
 MonoBehaviour:
   m_ObjectHideFlags: 0
