@@ -35,6 +35,34 @@ PrefabInstance:
       propertyPath: _health
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 368955166}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Aggrevate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: RPGProject.Assets.Scripts.Controllers.AIController, RPGProject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030086135671177701, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
+      propertyPath: TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1346178854772431532, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: _uniqueIdentifier
       value: 
@@ -49,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6654920011316009292, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6928832169088981215, guid: 2f6b6547b22108140b47862566840ca3, type: 3}
       propertyPath: m_RootOrder
@@ -130,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chaseDistance: 5
   _suspicionTime: 5
+  _aggroCooldownTime: 5
   _pathPatrol: {fileID: 0}
   _waypointTolerance: 1
   _waypointDwellTime: 3

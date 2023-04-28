@@ -16,7 +16,7 @@ MonoBehaviour:
   _projectile: {fileID: 0}
   _range: 2
   _attackSpeed: 2
-  _damage: 6
-  _percentageBonus: 10
+  _damage: 8
+  _percentageBonus: 40
   _equippedPrefab: {fileID: 2465256668864011776, guid: 31e89920d41922341b07a7a0d3793e35, type: 3}
   _animatorOverride: {fileID: 22100000, guid: e31ef87097a8ecb488923f3c100e2312, type: 2}

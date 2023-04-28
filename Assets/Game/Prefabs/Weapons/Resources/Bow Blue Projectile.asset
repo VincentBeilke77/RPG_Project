@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isRightHanded: 0
   _projectile: {fileID: 4291443444271159721, guid: 282e72ea2cc43364ea3b96412171384a, type: 3}
-  _range: 11
+  _range: 15
   _attackSpeed: 1.5
-  _damage: 7
-  _percentageBonus: 0
+  _damage: 2
+  _percentageBonus: 25
   _equippedPrefab: {fileID: 7950483716035512791, guid: 622bb3e0ad5944f4494b0ffa8edb5aab, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 1956934c4891ba444a8195f455251bff, type: 2}

@@ -11,6 +11,7 @@ namespace RPGProject.Assets.Scripts.Controllers
     {
         [SerializeField] private float _chaseDistance = 5f;
         [SerializeField] private float _suspicionTime = 3f;
+        [SerializeField] private float _aggroCooldownTime = 5f;
         [SerializeField] private PathPatrol _pathPatrol;
         [SerializeField] private float _waypointTolerance = 1f;
         [SerializeField] private float _waypointDwellTime = 3f;
@@ -25,6 +26,7 @@ namespace RPGProject.Assets.Scripts.Controllers
 
         private LazyValue<Vector3> _guardPosition;
         private float _timeSinceLastSeenPlayer = Mathf.Infinity;
+        private float _timeSinceAggrevated = Mathf.Infinity;
         private float _timeSinceLastWaypoint = Mathf.Infinity;
         private int _currentWaypointIndex = 0;
 
@@ -52,7 +54,7 @@ namespace RPGProject.Assets.Scripts.Controllers
         {
             if (_health.IsDead) return;
 
-            if (InAttackRange() && _fighter.CanAttack(_player))
+            if (IsAggrevated() && _fighter.CanAttack(_player))
             {
                 AttackBehaviour();
             }
@@ -68,10 +70,16 @@ namespace RPGProject.Assets.Scripts.Controllers
             UpdateTimers();
         }
 
+        public void Aggrevate()
+        {
+            _timeSinceAggrevated = 0;
+        }
+
         private void UpdateTimers()
         {
             _timeSinceLastSeenPlayer += Time.deltaTime;
             _timeSinceLastWaypoint += Time.deltaTime;
+            _timeSinceAggrevated += Time.deltaTime;
         }
 
         private void PatrolBehaviour()
@@ -122,10 +130,10 @@ namespace RPGProject.Assets.Scripts.Controllers
             _fighter.Attack(_player);
         }
 
-        private bool InAttackRange()
+        private bool IsAggrevated()
         {
             var distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
-            return  distanceToPlayer <= _chaseDistance;
+            return  distanceToPlayer <= _chaseDistance || _timeSinceAggrevated < _aggroCooldownTime;
         }
 
         // called by Unity
