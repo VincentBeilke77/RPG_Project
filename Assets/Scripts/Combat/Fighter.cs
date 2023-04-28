@@ -56,7 +56,7 @@ namespace RPGProject.Assets.Scripts.Combat
 
             _attackTime += Time.deltaTime;
 
-            if (!GetIsInRange())
+            if (!GetIsInRange(_target.transform))
             {
                 _mover.MoveTo(_target.transform.position, 1f);
             }
@@ -82,7 +82,11 @@ namespace RPGProject.Assets.Scripts.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
-            if (!_mover.CanMoveTo(combatTarget.transform.position)) return false;
+            if (!_mover.CanMoveTo(combatTarget.transform.position)
+                && !GetIsInRange(combatTarget.transform))
+            {
+                return false;
+            }
             var targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead;
         }
@@ -115,7 +119,7 @@ namespace RPGProject.Assets.Scripts.Combat
         void Hit()
         {
             if (_target == null) return;
-            float damage =  _stats.GetStat(Stat.Damage);
+            float damage = _stats.GetStat(Stat.Damage);
 
             if (_currentWeapon.value != null)
             {
@@ -138,9 +142,9 @@ namespace RPGProject.Assets.Scripts.Combat
             Hit();
         }
 
-        private bool GetIsInRange()
+        private bool GetIsInRange(Transform targetTransform)
         {
-            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeaponConfig.Range;
+            return Vector3.Distance(transform.position, targetTransform.position) <= _currentWeaponConfig.Range;
         }
 
         public void Cancel()
