@@ -4,6 +4,7 @@ using RPGProject.Assets.Scripts.Saving;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 namespace RPGProject.Assets.Scripts.Movement
 {
@@ -11,6 +12,7 @@ namespace RPGProject.Assets.Scripts.Movement
     {
         [SerializeField] private Camera _cam;
         [SerializeField] private float _maxSpeed = 6f;
+        [SerializeField] private float _maxNavPathLength = 40.0f;
 
         private NavMeshAgent _agent;
         private Health _health;
@@ -36,6 +38,17 @@ namespace RPGProject.Assets.Scripts.Movement
             MoveTo(destination, speedFraction);
         }
 
+        public bool CanMoveTo(Vector3 destination)
+        {
+            NavMeshPath path = new NavMeshPath();
+            var hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+            if (!hasPath) return false;
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > _maxNavPathLength) return false;
+
+            return true;
+        }
+
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             _agent.destination = destination;
@@ -57,6 +70,21 @@ namespace RPGProject.Assets.Scripts.Movement
 
             var animator = GetComponent<Animator>();
             animator.SetFloat("forwardSpeed", speed);
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float pathLength = 0;
+
+            if (path.corners.Length < 2) return pathLength;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                var distance = Vector3.Distance(path.corners[i], path.corners[i + 1]);
+                pathLength += distance;
+            }
+
+            return pathLength;
         }
 
         public JToken CaptureAsJToken()

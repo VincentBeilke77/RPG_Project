@@ -82,6 +82,7 @@ namespace RPGProject.Assets.Scripts.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
+            if (!_mover.CanMoveTo(combatTarget.transform.position)) return false;
             var targetToTest = combatTarget.GetComponent<Health>();
             return targetToTest != null && !targetToTest.IsDead;
         }
