@@ -7,7 +7,7 @@ namespace RPGProject.Assets.Scripts.Combat
 {
     public class WeaponPickup : MonoBehaviour, IRaycastable
     {
-        [SerializeField] private Weapon _weapon = null;
+        [SerializeField] private WeaponConfig _weapon = null;
         [SerializeField] private float _respawnTime = 5;
 
         public bool HandleRaycast(PlayerController callingController)

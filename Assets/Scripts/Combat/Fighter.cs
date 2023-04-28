@@ -15,7 +15,7 @@ namespace RPGProject.Assets.Scripts.Combat
     {
         [SerializeField] private Transform _rightHandTransform = null;
         [SerializeField] private Transform _leftHandTransform = null;
-        [SerializeField] private Weapon _defaultWeapon = null;
+        [SerializeField] private WeaponConfig _defaultWeapon = null;
 
         private Mover _mover;
         private Animator _animator;
@@ -23,6 +23,7 @@ namespace RPGProject.Assets.Scripts.Combat
         private BaseStats _stats;
 
         private float _attackTime = Mathf.Infinity;
+        private WeaponConfig _currentWeaponConfig;
         private LazyValue<Weapon> _currentWeapon;
 
         private Health _target;
@@ -34,13 +35,13 @@ namespace RPGProject.Assets.Scripts.Combat
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _stats = GetComponent<BaseStats>();
+            _currentWeaponConfig = _defaultWeapon;
             _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
         }
 
         private Weapon SetupDefaultWeapon()
         {
-            AttachWeapon(_defaultWeapon);
-            return _defaultWeapon;
+            return AttachWeapon(_defaultWeapon);
         }
 
         private void Start()
@@ -66,16 +67,16 @@ namespace RPGProject.Assets.Scripts.Combat
             }
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
-            _currentWeapon.value = weapon;
-            AttachWeapon(weapon);
+            _currentWeaponConfig = weapon;
+            _currentWeapon.value = AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
-            weapon.Spawn(_rightHandTransform, _leftHandTransform, animator);
+            return weapon.Spawn(_rightHandTransform, _leftHandTransform, animator);
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -95,7 +96,7 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             transform.LookAt(_target.transform);
 
-            if (_attackTime > _currentWeapon.value.AttackSpeed)
+            if (_attackTime > _currentWeaponConfig.AttackSpeed)
             {
                 TriggerAttack();
                 _attackTime = 0;
@@ -114,9 +115,15 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (_target == null) return;
             float damage =  _stats.GetStat(Stat.Damage);
-            if (_currentWeapon.value.HasProjectile())
+
+            if (_currentWeapon.value != null)
             {
-                _currentWeapon.value.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
+                _currentWeapon.value.OnHit();
+            }
+
+            if (_currentWeaponConfig.HasProjectile())
+            {
+                _currentWeaponConfig.LaunchProjectile(_rightHandTransform, _leftHandTransform, _target, gameObject, damage);
             }
             else
             {
@@ -132,7 +139,7 @@ namespace RPGProject.Assets.Scripts.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeapon.value.Range;
+            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeaponConfig.Range;
         }
 
         public void Cancel()
@@ -152,19 +159,19 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.value.Damage;
+                yield return _currentWeaponConfig.Damage;
             }
         }
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(_currentWeapon.value.name);
+            return JToken.FromObject(_currentWeaponConfig.name);
         }
 
         public void RestoreFromJToken(JToken state)
         {
             string weaponName = state.ToObject<string>();
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            WeaponConfig weapon = Resources.Load<WeaponConfig>(weaponName);
             EquipWeapon(weapon);
         }
 
@@ -172,7 +179,7 @@ namespace RPGProject.Assets.Scripts.Combat
         {
             if (stat == Stat.Damage)
             {
-                yield return _currentWeapon.value.PercentageBonus;
+                yield return _currentWeaponConfig.PercentageBonus;
             }
         }
     }
