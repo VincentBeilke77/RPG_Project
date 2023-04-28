@@ -3,6 +3,7 @@ using RPGProject.Assets.Scripts.Attributes;
 using RPGProject.Assets.Scripts.Combat;
 using RPGProject.Assets.Scripts.Core;
 using RPGProject.Assets.Scripts.Movement;
+using System;
 using UnityEngine;
 
 namespace RPGProject.Assets.Scripts.Controllers
@@ -17,6 +18,7 @@ namespace RPGProject.Assets.Scripts.Controllers
         [SerializeField] private float _waypointDwellTime = 3f;
         [Range(0,1)] 
         [SerializeField] private float _patrolSpeedFraction = .2f;
+        [SerializeField] private float _shoutDistance = 5f;
 
         private GameObject _player;
         private Health _health;
@@ -128,6 +130,19 @@ namespace RPGProject.Assets.Scripts.Controllers
         {
             _timeSinceLastSeenPlayer = 0;
             _fighter.Attack(_player);
+
+            AggrevateNearbyEnemies();
+        }
+
+        private void AggrevateNearbyEnemies()
+        {
+            var hits = Physics.SphereCastAll(transform.position, _shoutDistance, Vector3.up, 0);
+            foreach (var hit in hits)
+            {
+                var ai = hit.collider.GetComponent<AIController>();
+                if (ai == null) continue;
+                ai.Aggrevate();
+            }
         }
 
         private bool IsAggrevated()

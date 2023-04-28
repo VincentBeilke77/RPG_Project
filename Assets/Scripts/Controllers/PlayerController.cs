@@ -14,6 +14,7 @@ namespace RPGProject.Assets.Scripts.Controllers
 
         [SerializeField] private CursorMapping[] _cursorMappings = null;
         [SerializeField] private float _maxNavMeshProjection = 1.0f;
+        [SerializeField] private float _raycastRadius = 1f;
 
         private void Awake()
         {
@@ -62,7 +63,7 @@ namespace RPGProject.Assets.Scripts.Controllers
 
         private RaycastHit[] RaycastAllSorted()
         {
-            var hits = Physics.RaycastAll(GetMouseRay());
+            var hits = Physics.SphereCastAll(GetMouseRay(), _raycastRadius);
             BubbleSortByDistance(hits);
             return hits;
         }
